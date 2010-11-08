@@ -2,14 +2,13 @@
 <head>
 <title><?php echo $mywebtitle; ?></title>
 <base href= <?php echo "$base"; ?> >
-<?php echo $myrobots ?>
 <link href="<?php echo $base;?>includes/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <!-- start header -->
 <div id="contmain">
 <div id="logo">
-	<h1><a href="#">ARTIFICIAL INTELLIGENCE BANK</a></h1>
+	<h1><a href=<?php echo "$base"; ?>>ARTIFICIAL INTELLIGENCE BANK</a></h1>
 	<h2><a href="http://www.mrbachkhoa.org/">Design by CS TEAM</a></h2>
 </div>
 <div id="left1">
@@ -17,10 +16,10 @@
 <div id="header"> 
 	<div id="menu">
 		<ul>
-			<li><a href="#">Home</a></li>
+			<li><a href="<?php echo "$base"; ?>">Home</a></li>
 			<li><a href="#">Blogs</a></li>
 			<li><a href="#">Photos</a></li>
-			<li><a href="#">About</a></li>
+			<li><a href="<?php echo "$base"."about"; ?>">About</a></li>
 			<li><a href="#">Contact</a></li>
 		</ul>
 	</div>	
