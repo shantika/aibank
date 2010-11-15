@@ -74,6 +74,11 @@ $this->load->library('Tree');
         }
         
         public static function updateTree($tree){
+            if (MTree::getTreeById($tree->getParentId())!=null){
+                $tree->setLevel((MTree::getTreeById($tree->getParentId())->getLevel())+1);
+            }else{
+                $tree->setLevel(0);
+            }
             $insertData = array(
                     //'id' => $tree->getID(),
                     'type' => $tree->getType(),
