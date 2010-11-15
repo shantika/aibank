@@ -15,7 +15,7 @@
         function dashboard(){
             // This is the main function of our project.
             // So please pay the most of your attention to it, guys!!!
-            $data['mywebtitle'] = 'Dashboard - AI Bank'; 
+            $data['title'] = 'Dashboard - AI Bank'; 
             $data['base']       = $this->config->item('base_url');
             $data['css']        = $this->config->item('css');
             $this->load->helper('form');

@@ -1,4 +1,4 @@
-<h1><?php echo $title;?></h1>
+<?php $this->load->view('header_view'); ?>
 
 <?php
 echo form_open('admin/customers/create');
@@ -59,3 +59,5 @@ echo form_close();
 
 
 ?>
+
+<?php $this->load->view('footer_view'); ?>
