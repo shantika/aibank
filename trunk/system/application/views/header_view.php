@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'><html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
-<title><?php echo $mywebtitle; ?></title>
+<title><?php echo $title; ?></title>
 <base href= <?php echo "$base"; ?> >
 <link href="<?php echo $base;?>includes/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
@@ -16,11 +16,17 @@
 <div id="header"> 
 	<div id="menu">
 		<ul>
-			<li><a href="<?php echo "$base"; ?>">Home</a></li>
-			<li><a href="#">Blogs</a></li>
-			<li><a href="#">Photos</a></li>
+			<li><a href="<?php echo "$base"; ?>index.php/home">Home</a></li>
 			<li><a href="<?php echo "$base"."about"; ?>">About</a></li>
 			<li><a href="#">Contact</a></li>
+            <li><a href="
+            <?php
+                $status = $this->session->userdata('status');
+                $tmp = (isset($status) && $status=='OK')? 
+                $base."index.php/home/logout\">Log out, ".$this->session->userdata('name'): 
+                $base."\">Log in";
+                echo $tmp;
+            ?></a></li>
 		</ul>
 	</div>	
 <!-- end header -->

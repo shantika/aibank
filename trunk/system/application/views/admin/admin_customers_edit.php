@@ -1,4 +1,4 @@
-<h1><?php echo $title;?></h1>
+<?php $this->load->view('header_view'); ?>
 
 <?php
 echo form_open('admin/customers/edit');
@@ -21,7 +21,7 @@ echo form_dropdown('job',$options, $customer['job']) ."</p>";
 
 echo "<p><label for='housing_status'>Housing status</label><br/>";
 $options = array('Private home' => '2', 'Renting apartment' => '1', 'Live with relatives/friends' => '0');
-echo form_dropdown('housing_status',$options, $customer['housing_status]) ."</p>";
+echo form_dropdown('housing_status',$options, $customer['housing_status']) ."</p>";
 
 echo "<p><label for='credit_quality'>Credit Quality</label><br/>";
 $options = array('Very good' => '3', 'Normal' => '2', 'Unidentified' => '1', 'Bad' => '0');
@@ -61,3 +61,5 @@ echo form_close();
 
 
 ?>
+
+<?php $this->load->view('footer_view'); ?>
