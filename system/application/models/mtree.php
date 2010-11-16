@@ -1,5 +1,5 @@
 <?php
-$this->load->library('Tree');
+// $this->load->library('Tree');
     class  MTree extends Model{
         
         public function MTree(){
