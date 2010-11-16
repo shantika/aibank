@@ -89,7 +89,7 @@
             //tính InfoX tương ứng với thuộc tính AttributeOrdinal: 
         	$infoX = 0;
         	
-        	// giả sử tập giá trị của thuộc tính AttributeOrdinal (rời rạc) có n giá trị 
+        	// giả sử tập giá trị của thuộc tính AttributeOrdinal có n giá trị 
         	// chia bảng HumanTable thành n bảng T1, T2, ..., Tn ứng với n giá trị của thuộc tính AttributeOrdinal
         	// với mỗi bảng con Ti ta tính:
         	//	--> p(i)	= |Ti|/|T|
@@ -119,6 +119,8 @@
         	return $infoX;
         }
         
+        
+        
         /**
          * Function	calcGain()
          * ------------------------------------
@@ -144,6 +146,64 @@
         	return	($info - $infoX);
         }
         
+        public function isContinueous($attribute){
+            if (
+                (strcasecmp($attribute,'income')==0)||
+                (strcasecmp($attribute,'familiar_income')==0)|| 
+                (strcasecmp($attribute,'outcome')==0)||
+                (strcasecmp($attribute,'money_owned')==0)||
+                (strcasecmp($attribute,'dob_year')==0)
+            ){
+                return true;
+            }else{
+                return false;
+            }  
+        }
+        
+        /**
+         * Function	calcSplitInfo()
+         * ------------------------------------
+         * @desc	
+         * @param	
+         * @return	
+         */
+        
+        public function calcSplitInfo($arrCus, $attrName){
+            // tính giá trị SplitInfo
+        	$splitInfo = 0;
+        	// chia bảng HumanTable thành n bảng T1, T2, ..., Tn ứng với n giá trị của thuộc tính AttributeOrdinal
+        	// |Ti| = số record trong bảng Ti
+        	// với mỗi bảng con Ti ta tính: 
+        	// --> p(i)		= |Ti|/|T|
+            $tmpMCus = new MCustomers();
+            $valAttr = $tmpMCus->getDistinctValAttr($attrName);
+            $total = count($valAttr); 
+            echo "<br />";
+            echo "total = ".$total;
+            for ($i = 0 ; $i < $total; $i++){
+                $tmp = array();
+                foreach ($arrCus as $eachCus){
+                    $eachCusArr = $eachCus->toArray();
+                    echo "<br />";
+                    echo $eachCusArr[$attrName];
+                    if($eachCusArr[$attrName] == $valAttr[$i]){                        
+                        array_push($tmp, $eachCus);
+                    }
+                }
+                $p = count($tmp)/count($arrCus);
+                echo "<br />";
+                echo "p cua Hiep bang ".$p;
+                if ($p != 0){
+                    $splitInfo -= $p*(log($p)/log(2));
+                }
+            }
+        	// --> tam(i)	= -p(i) * log(p(i)) --> log là loga cơ số 2
+        
+        	//SplitInfo = tổng tất cả các tam(i) - i = 1,...n
+        
+        	return $splitInfo;
+        }
+        
         /**
          * Function	calcGainRatio()
          * ------------------------------------
@@ -152,25 +212,25 @@
          * @return	
          */
         
-        public function calcGainRatio(){
+        public function calcGainRatio($arrCus, $attrName){
             // để tính GainRatio(X) ứng với mỗi thuộc tính X ta cần: 
 	
-        	double GainRatio	= 0;
-        	double Gain			= 0;
-        	double SplitInfo	= 0;
+        $gainRatio	= 0;
+//        	double Gain			= 0;
+//        	double SplitInfo	= 0;
         	// nếu thuộc tính là rời rạc
         		// --> tính Gain(X) ứng với thuộc tính X và bảng Human
-        		Gain = CalcGain(HumanTable, AttributeOrdinal);
+        		$gain = $this->calcGain($arrCus, $attrName);
         
         		// --> tính SplitInfo(X) ứng với thuộc tính X và bảng Human
-        		SplitInfo = CalcSplitInfo(HumanTable, AttributeOrdinal);
+        		$splitInfo = $this->calcSplitInfo($arrCus, $attrName);
         
         		// --> GainRatio(X) = Gain(X)/SplitInfo(X);
-        		GainRatio = Gain/SplitInfo;
+        		$gainRatio = $gain/$splitInfo;
         
         	//nếu thuộc tính là liên tục
         		//
-        	return GainRatio;
+        	return $gainRatio;
         }
         
         
