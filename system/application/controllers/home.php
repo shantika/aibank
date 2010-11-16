@@ -57,7 +57,7 @@
 
             $this->load->library('Customer'); 
             $this->load->library('TreeNode');
-            $mC = new MCustomer();
+            $mC = new MCustomers();
             $cus = $mC->getById(11);
             
             //$root = new TreeNode();
