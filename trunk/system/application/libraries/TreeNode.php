@@ -9,10 +9,33 @@
 	
 	class TreeNode{
         # Variables
-        public $id, $parent_id, $type, $level, $label, $data;
-       
+        public $id, $parent_id, $type, $label, $data, $level, $children;
+        public $leaf_n, $leaf_e;    // for coverage, only has value if $type = 1,
+                                    // i.e the current node is ah leaf
+        
         function TreeNode(){
+            $this->id = 0;
+            $this->type = 0;
+            $this->label = 'default label';
+            $this->data = "";
+            $this->children = array();
+            $this->leaf_n = "";
+            $this->leaf_e = "";
+            $this->level = 0;            
         }
+        
+        /**
+         * Function	setOption()
+         * ------------------------------------
+         * @desc	set method for specified field
+         * @param	$name, $value
+         * @return	true
+         */
+        
+        public function setOption($name, $value){
+            $this->{$name} = $value;
+            return true;
+        }        
         
         /**
          * Function	getInstance()
@@ -23,7 +46,7 @@
          * @return	TreeNode Object
          */
         
-        public static function getInstance($id, $data, $parent_id, $type="0", $label="default label", $data=""){
+        public static function getInstance($id, $data, $parent_id, $type, $label, $data){
             $obj = new TreeNode();
             $obj->id = $id;
             $obj->data = $data;
@@ -44,8 +67,63 @@
          */
         
         public static function getTreeNodeById($id){
-            $tmp = MTreeNodes::getNodeById($id);
-            return TreeNode::getInstance($id, $tmp->data, $tmp->parent_id, $tmp->type, $tmp->label, $tmp->data);
+            $tmp = new MTreeNodes();
+            $obj = $tmp->getNodeById($id);
+            return TreeNode::getInstance($id, $obj->data, $obj->parent_id, $obj->type, $obj->label, $obj->data);
+        }
+        
+        /**
+         * Function	save()
+         * ------------------------------------
+         * @desc	this function will invoke add() in class MTreeNodes
+         *          and save current object to database
+         * @param	(no need)
+         * @return	true if success, else return false
+         */
+        
+        public function save(){
+            $tmp = new MTreeNodes();
+            $idNew = $tmp->addNewNode($this);
+            if ($idNew != -1){
+                $this->setOption('id', $idNew);
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        /**
+         * Function	addChild()
+         * ------------------------------------
+         * @desc	add a child to the current node 
+         * @param	TreeNode &$childNode
+         * @return	(no need)
+         */
+        
+        public function addChild(&$childNode){
+            $childNode->level = $this->level+1;
+            $this->children[] = &$childNode;
+            $childNode->parent = $this;
+            $childNode->parent_id = $this->id;
+        }
+        
+        /**
+         * Function	findChild()
+         * ------------------------------------
+         * @desc	find all child node of current node
+         * @param	(no need)
+         * @return	(no need)
+         */
+        
+        public function findChild(){
+            $tmp = new MTreeNodes();
+            $children = $tmp->searchChild($this->id);
+            if (count($children) > 0){
+                foreach($children as $obj){
+                    $eachChild = TreeNode::getInstance($obj->id, $obj->data, $obj->parent_id, $obj->type, $obj->label, $obj->data);
+                    $this->addChild($eachChild);
+                }
+            }
         }
 	}
 ?>

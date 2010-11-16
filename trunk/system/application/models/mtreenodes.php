@@ -8,9 +8,6 @@
 	 */
 	
     class MTreeNodes extends Model{
-        # Variables
-        public $id, $parent_id, $type, $label, $data;
-
         # Constructor
         function MTreeNodes(){
             parent::Model();
@@ -24,16 +21,58 @@
          * @return	MTreeNodes Object
          */
         
-        public static function getNodeById($id){
-            $tmp = new MTreeNodes();
-            $tmp->db->where('id', $id);
-            $tmp->db->limit(1);
-            $Q = $tmp->db->get('treenodes');
+        public function getNodeById($id){
+            $this->db->where('id', $id);
+            $this->db->limit(1);
+            $Q = $this->db->get('treenodes');
             if ($Q->num_rows() >0 ){
                 $row = $Q->row_object();
                 return $row;
             }else{
                 return null;
+            }
+        }
+        
+        /**
+         * Function	addNewNode()
+         * ------------------------------------
+         * @desc	as the name, this function will add a node to database
+         * @param	TreeNode &$treeNode
+         * @return	id if success, else return -1
+         */
+        
+        public function addNewNode($treeNode){
+            $this->db->set('parent_id', $treeNode->parent_id);
+            $this->db->set('type', $treeNode->type);
+            $this->db->set('label', $treeNode->label);
+            $this->db->set('data', $treeNode->data);
+            $this->db->set('leaf_n', $treeNode->leaf_n);
+            $this->db->set('leaf_e', $treeNode->leaf_e);
+            if ($this->db->insert('treenodes')){
+                return $this->db->insert_id();   
+            }else{
+                return -1;
+            }
+        }
+        
+        /**
+         * Function	searchChild()
+         * ------------------------------------
+         * @desc	search all children of a node  
+         * @param	id of ancestor
+         * @return	Array of object
+         */
+        
+        public function searchChild($pid){
+            // $this->db->select('id');
+            $this->db->where('parent_id', $pid);
+            $this->db->limit(10);
+            $Q = $this->db->get('treenodes');
+            if ($Q->num_rows() > 0){
+                $result = $Q->result_object();
+                return $result;
+            }else{
+                return array();
             }
         }
     }

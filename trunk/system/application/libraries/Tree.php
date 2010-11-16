@@ -1,57 +1,45 @@
 <?php
-    class  Tree{
-        const ROOT_TYPE = 'ROOT';
-        const LEAF_TYPE = 'LEAF';
-        const NORMAL_TYPE='NORMAL';
+	/**
+	 * @auth	Hiep Pham
+	 * @project	aibank
+	 * @since	16/11/2010
+	 * ******************************************
+	 * @desc	Class Tree
+	 */
+	
+    class Tree{
+        # Variables
+        public $root;
         
-        private $id = null;
-        private $type = Tree::NORMAL_TYPE;
-        private $label;
-        private $parentId = -1;
-        private $data;
-        private $level;
-        
-        public function Tree($id,$type,$label,$parentId,$data,$level){
-            $this->id=$id;
-            $this->setType($type);
-            $this->setLabel($label);
-            $this->setParentId($parentId);
-            $this->setData($data);
-            $this->setLevel($level);            
+        # Constructor
+        public function Tree(){
+            
         }
         
-        public function getId(){
-            return $id;    
+        /**
+         * Function	root()
+         * ------------------------------------
+         * @desc	mark a node as root of tree
+         * @param	TreeNode &$treeNode
+         * @return	(no need)
+         */
+        
+        public function root($treeNode){
+            $this->root = $treeNode;
         }
-        public function getType(){
-            return $type;
+        
+        /**
+         * Function	nextStep()
+         * ------------------------------------
+         * @desc	select next node on the tree to reach
+         * @param	(no need)
+         * @return	
+         */
+        public function nextStep(){
+            /* insert your code here to complete */
+            
         }
-        public function setType($type){
-            $this->type=$type;
-        }
-        public function getLabel(){
-            return $label;
-        }
-        public function setLabel($label){
-            $this->label=$label;
-        }
-        public function getParentId(){
-            return $parentId;
-        }
-        public function setParentId($parentId){
-            $this->parentId=$parentId;
-        }        
-        public function getData(){
-            return $data;
-        }
-        public function setData($data){
-            $this->data=$data;
-        }
-        public function getLevel(){
-            return $level;
-        }
-        public function setLevel($level){
-            $this->level=$level;
-        }
+        
     }
+	
 ?>
