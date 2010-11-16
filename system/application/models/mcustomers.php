@@ -7,7 +7,6 @@ class MCustomers extends Model{
 		parent::Model();
 	}
 
-
     public function getAll(){
         $this->load->library('Customer');
         $query = $this->db->get('customers');
@@ -180,6 +179,21 @@ class MCustomers extends Model{
  	 	$this->db->where('id', $id);
 	 	$this->db->update('customers',$data);
 	}
+    
+    /**
+     * Function	getDistinctAttr()
+     * ------------------------------------
+     * @desc	count the number of rows with
+     *          different values
+     * @param	name of attribute
+     * @return	array of distinct value
+     */
+    
+    public function getDistinctValAttr($attrName){
+        $Q = $this->db->query("select group_concat(distinct {$attrName}) as val from customers");
+        return $Q->row_object()->val;
+    }
+            
 
 }
 ?>
