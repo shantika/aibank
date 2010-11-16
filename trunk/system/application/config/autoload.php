@@ -108,7 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('MAdmins','MTree', 'MTreeNodes');
+$autoload['model'] = array('MAdmins', 'MTreeNodes', 'MCustomer');
 
 
 
