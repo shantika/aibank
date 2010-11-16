@@ -193,6 +193,24 @@ class MCustomers extends Model{
         $Q = $this->db->query("select group_concat(distinct {$attrName}) as val from customers");
         return $Q->row_object()->val;
     }
+    
+    /**
+     * Function	countByClass()
+     * ------------------------------------
+     * @desc	
+     * @param	
+     * @return	
+     */
+    
+    public static function countByClass($customerArray, $class){
+        $count = 0;
+        foreach($customerArray as $customer){
+            if (!strcasecmp($class,$customer->class)){
+                $count++;
+            }
+        }
+        return $count;
+    }
      
     public function getCustomerOrderBy($attribute){
         $this->load->library('Customer');
