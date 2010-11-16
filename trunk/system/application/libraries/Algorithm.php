@@ -177,22 +177,16 @@
         	// --> p(i)		= |Ti|/|T|
             $tmpMCus = new MCustomers();
             $valAttr = $tmpMCus->getDistinctValAttr($attrName);
-            $total = count($valAttr); 
-            echo "<br />";
-            echo "total = ".$total;
+            $total = count($valAttr);
             for ($i = 0 ; $i < $total; $i++){
                 $tmp = array();
                 foreach ($arrCus as $eachCus){
                     $eachCusArr = $eachCus->toArray();
-                    echo "<br />";
-                    echo $eachCusArr[$attrName];
                     if($eachCusArr[$attrName] == $valAttr[$i]){                        
                         array_push($tmp, $eachCus);
                     }
                 }
                 $p = count($tmp)/count($arrCus);
-                echo "<br />";
-                echo "p cua Hiep bang ".$p;
                 if ($p != 0){
                     $splitInfo -= $p*(log($p)/log(2));
                 }
