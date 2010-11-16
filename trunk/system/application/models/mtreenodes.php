@@ -67,7 +67,7 @@
             // $this->db->select('id');
             $this->db->where('parent_id', $pid);
             $this->db->limit(10);
-            $Q = $this->db->get('treenodes');
+            $Q = $this->db->get('treenodes'); 
             if ($Q->num_rows() > 0){
                 $result = $Q->result_object();
                 return $result;
@@ -80,22 +80,42 @@
         public function getCustomerClass($root, $customer){
             $this->load->library('Customer');
             $this->load->library('TreeNode');
+            var_dump($customer);
             $attributeArray = $customer->toArray();
             $currentNode=$root;
             while ($currentNode->type!=1){
-                $currentNode->findChild();
-                $currentChildren = $currentNode->children;
-                $data = $attributeArray[$currentChildren->label];
-                $found=0;
-                foreach ($currentChildren as $children){
-                    if (strcasecmp($children->data,$data)==0){
-                        $currentNode=$children;
-                        $found=1;
-                        break;
-                    }                     
-                }
-                if ($found==0){
-                    echo "error";
+                $currentNode->findChild();                 
+                $currentChildren = $currentNode->children; 
+                if (sizeof($currentChildren)>0){
+                    $data = $attributeArray[$currentChildren[0]->label];
+                    $found=0;
+                    foreach ($currentChildren as $children){
+                        //var_dump($children);
+                        //var_dump("_id:".$currentNode->id.",children:id".$children->id.",".$children->data."?".$data."_");
+                        if ($children->type==1){
+                            //var_dump($children->data);
+                            return $children->data;
+                        }
+                        if (strcasecmp($children->data,$data)==0){
+                            $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                            var_dump("__trace1:".$children->id."_");
+                            $found=1;
+                            break;
+                        }
+                        if ($children->data==$data){
+                            $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                            var_dump("__trace2:".$children->id."_"); 
+                            $found=1;
+                            break;
+                        }                     
+                    }
+                    if ($found==0){
+                        //var_dump($currentNode->id);
+                        echo "error_nochild_match";
+                        return null;
+                    }
+                }else{
+                    echo "error_nochild";
                     return null;
                 }    
             }
