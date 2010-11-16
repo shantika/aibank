@@ -94,6 +94,10 @@
                         //var_dump("_id:".$currentNode->id.",children:id".$children->id.",".$children->data."?".$data."_");
                         if ($children->type==1){
                             //var_dump($children->data);
+                            $children->leaf_n++;
+                            if (strcasecmp($children->data,$customer->class)!=0){
+                                $children->leaf_e++;    
+                            }
                             return $children->data;
                         }
                         if (strcasecmp($children->data,$data)==0){

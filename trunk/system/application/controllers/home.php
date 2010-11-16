@@ -69,6 +69,12 @@
             var_dump($test);
         }
         
+        function testCalc(){
+            $this->load->library('Util');
+            $ave = Util::calcSplitInfo('income');
+            var_dump($ave);
+        }
+        
         function testf(){
             echo time();
         }
