@@ -11,11 +11,6 @@
         private $data;
         private $level;
         
- 
-        
-        public function Tree(){
-            
-        }
         public function Tree($id,$type,$label,$parentId,$data,$level){
             $this->id=$id;
             $this->setType($type);

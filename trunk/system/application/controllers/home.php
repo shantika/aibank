@@ -47,11 +47,9 @@
         }
         
         function testclass(){
-            $this->load->library('testclass');
-            $this->testclass->getName();
-            var_dump($this->testclass);
-            $tmp = $this->testclass;
-            $tmp->getSecret();
+            $this->load->library('treenode');            
+            $test = TreeNode::getTreeNodeById('1');
+            var_dump($test);
         }
     }
 ?>
