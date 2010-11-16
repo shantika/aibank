@@ -1,12 +1,13 @@
 <?php
-$this->load->library('Tree');
+
     class TreeController extends Controller{
-        
+         
         public function TreeController(){
             parent::Controller();
         }
         
         public function setRoot($tree){
+            $this->load->library('Tree');
             $tree->setType(Tree::ROOT_TYPE);
             $tree->setLevel(0);
             $tree->setParentId(-1);
@@ -34,5 +35,7 @@ $this->load->library('Tree');
             }
             return $arrResultTree;
         }
+        
+
     }
 ?>

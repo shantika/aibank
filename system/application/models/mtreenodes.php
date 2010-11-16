@@ -75,5 +75,32 @@
                 return array();
             }
         }
+        
+        
+        public function getCustomerClass($root, $customer){
+            $this->load->library('Customer');
+            $this->load->library('TreeNode');
+            $attributeArray = $customer->toArray();
+            $currentNode=$root;
+            while ($currentNode->type!=1){
+                $currentNode->findChild();
+                $currentChildren = $currentNode->children;
+                $data = $attributeArray[$currentChildren->label];
+                $found=0;
+                foreach ($currentChildren as $children){
+                    if (strcasecmp($children->data,$data)==0){
+                        $currentNode=$children;
+                        $found=1;
+                        break;
+                    }                     
+                }
+                if ($found==0){
+                    echo "error";
+                    return null;
+                }    
+            }
+            var_dump($currentNode->data);
+            return $currentNode->data;
+        }
     }
 ?>

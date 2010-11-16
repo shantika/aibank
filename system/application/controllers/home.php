@@ -47,10 +47,24 @@
         }
         
         function testclass(){
-            $this->load->library('treenode');            
-            $test = TreeNode::getTreeNodeById('1');
-            $test->findChild();
-            var_dump($test);
+            //$this->load->library('treenode');            
+            //$test = TreeNode::getTreeNodeById('1');
+            //$test->findChild();
+           //var_dump($test);
+        }
+        
+        function customer(){
+
+            $this->load->library('Customer'); 
+            $mC = new MCustomer();
+            $cus = $mC->getById(11);
+            
+            $mT = new MTreeNodes();
+            $root = $mT->getNodeById(1);            
+            var_dump($root);
+            $test = $mT->getCustomerClass($root,$cus);
+            
+            //var_dump($test);
         }
         
         function testf(){
