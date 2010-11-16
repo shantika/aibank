@@ -49,7 +49,12 @@
         function testclass(){
             $this->load->library('treenode');            
             $test = TreeNode::getTreeNodeById('1');
+            $test->findChild();
             var_dump($test);
+        }
+        
+        function testf(){
+            echo time();
         }
     }
 ?>
