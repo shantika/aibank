@@ -26,6 +26,14 @@
          */
         
         public function checkOnlyClass($arrayCustomer){
+            $currentClass=-1;
+            foreach ($arrayCustomer as $customer){
+                if (strcasecmp($currentClass,$customer->class)!=0){
+                   if ($currentClass==-1) $currentClass==$customer->class;
+                   else return false; 
+                }
+            }
+            return true;
             /* insert your code here to complete */
             
         }

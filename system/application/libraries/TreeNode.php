@@ -19,8 +19,8 @@
             $this->label = 'default label';
             $this->data = "";
             $this->children = array();
-            $this->leaf_n = "";
-            $this->leaf_e = "";
+            $this->leaf_n = 0;
+            $this->leaf_e = 0;
             $this->level = 0;            
         }
         
