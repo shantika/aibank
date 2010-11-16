@@ -100,9 +100,10 @@
          * @return	(no need)
          */
         
-        public function addChild(&$childNode){
+        public function addChild($childNode){
             $childNode->level = $this->level+1;
-            $this->children[] = &$childNode;
+            //$this->children[] = &$childNode;  Vua sua 1 ty. by Hacon
+            $this->children = array_merge($this->children,array($childNode));
             $childNode->parent = $this;
             $childNode->parent_id = $this->id;
         }
@@ -118,12 +119,13 @@
         public function findChild(){
             $tmp = new MTreeNodes();
             $children = $tmp->searchChild($this->id);
+            
             if (count($children) > 0){
                 foreach($children as $obj){
                     $eachChild = TreeNode::getInstance($obj->id, $obj->data, $obj->parent_id, $obj->type, $obj->label, $obj->data);
-                    $this->addChild($eachChild);
+                    $this->addChild($eachChild);                    
                 }
-            }
+            } 
         }
 	}
 ?>

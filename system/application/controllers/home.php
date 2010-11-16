@@ -56,15 +56,17 @@
         function customer(){
 
             $this->load->library('Customer'); 
+            $this->load->library('TreeNode');
             $mC = new MCustomer();
             $cus = $mC->getById(11);
             
+            //$root = new TreeNode();
+            $root = TreeNode::getTreeNodeById(1);            
+            //var_dump($root);
             $mT = new MTreeNodes();
-            $root = $mT->getNodeById(1);            
-            var_dump($root);
             $test = $mT->getCustomerClass($root,$cus);
             
-            //var_dump($test);
+            var_dump($test);
         }
         
         function testf(){
