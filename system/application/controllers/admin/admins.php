@@ -6,7 +6,7 @@ class Admins extends Controller {
     session_start();
     
 	if ($_SESSION['userid'] < 1){
-    	redirect('welcome/index','refresh');
+    	redirect('home/index','refresh');
     }
   }
   
