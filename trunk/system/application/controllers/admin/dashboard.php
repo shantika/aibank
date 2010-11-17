@@ -8,7 +8,7 @@ class Dashboard extends Controller {
    if (!isset($_SESSION['target_ready'])){ $_SESSION['target_ready'] = false;  }
    
 	if ($_SESSION['userid'] < 1){
-    	redirect('welcome/index','refresh');
+    	redirect('home/index','refresh');
     }
   }
   
@@ -144,7 +144,7 @@ class Dashboard extends Controller {
  function logout(){
 	unset($_SESSION['userid']);
 	$this->session->set_flashdata('error',"You've been logged out!");
-	redirect('welcome/index','refresh'); 	
+	redirect('home/index','refresh'); 	
  }
  
 }
