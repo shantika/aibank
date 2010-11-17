@@ -1,3 +1,5 @@
+<?php $this->load->view('admin_header');?>
+<div id='main'>
 <h1><?php echo $title;?></h1>
 <p><?php echo anchor("admin/admins/create", "Create new user");?>
 <?php
@@ -25,3 +27,5 @@ if (count($admins)){
 	echo "</table>";
 }
 ?>
+</div>
+<?php $this->load->view('admin_footer');?>

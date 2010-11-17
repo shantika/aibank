@@ -8,10 +8,10 @@
 | URL to your CodeIgniter root. Typically this will be your base URL,
 | WITH a trailing slash:
 |
-|	http://example.com/
+|	http://www.your-site.com/
 |
 */
-$config['base_url']	= "http://localhost/aibank/";
+$config['base_url']	= "http://localhost/aibank2/";
 
 /*
 |--------------------------------------------------------------------------
@@ -132,16 +132,16 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 |--------------------------------------------------------------------------
 |
 | By default CodeIgniter uses search-engine friendly segment based URLs:
-| example.com/who/what/where/
+| www.your-site.com/who/what/where/
 |
 | You can optionally enable standard query string based URLs:
-| example.com?who=me&what=something&where=here
+| www.your-site.com?who=me&what=something&where=here
 |
 | Options are: TRUE or FALSE (boolean)
 |
 | The other items let you set the query string "words" that will
 | invoke your controllers and its functions:
-| example.com/index.php?c=controller&m=function
+| www.your-site.com/index.php?c=controller&m=function
 |
 | Please note that some of the helpers won't work as expected when
 | this feature is enabled, since CodeIgniter is designed primarily to
@@ -149,9 +149,9 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 |
 */
 $config['enable_query_strings'] = FALSE;
-$config['controller_trigger'] 	= 'c';
-$config['function_trigger'] 	= 'm';
-$config['directory_trigger'] 	= 'd'; // experimental not currently in use
+$config['directory_trigger'] = 'd';	 // experimental not currently in use
+$config['controller_trigger'] = 'c';
+$config['function_trigger'] = 'm';
 
 /*
 |--------------------------------------------------------------------------
@@ -238,7 +238,7 @@ $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update'] 	= 300;
+$config['sess_time_to_update'] 		= 300;
 
 /*
 |--------------------------------------------------------------------------
@@ -310,19 +310,6 @@ $config['time_reference'] = 'local';
 */
 $config['rewrite_short_tags'] = FALSE;
 
-
-/*
-|--------------------------------------------------------------------------
-| Reverse Proxy IPs
-|--------------------------------------------------------------------------
-|
-| If your server is behind a reverse proxy, you must whitelist the proxy IP
-| addresses from which CodeIgniter should trust the HTTP_X_FORWARDED_FOR
-| header in order to properly identify the visitor's IP address.
-| Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
-|
-*/
-$config['proxy_ips'] = '';
 
 
 /* End of file config.php */

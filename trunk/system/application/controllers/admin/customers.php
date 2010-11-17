@@ -16,11 +16,9 @@ class Customers extends Controller
 	function index()
 	{
 		$data['title'] = "Manage Customers";
-		$data['main'] = 'admin_customers_home';
 		$data['customers'] = $this->MCustomers->getAllCustomers();
-		$data['tinymce'] = '';
 		$this->load->vars($data);
-		$this->load->view('dashboard');  
+		$this->load->view('admin_customers_home');  
   	}
   
 	function create()
@@ -34,10 +32,8 @@ class Customers extends Controller
   		}else
 		{
 			$data['title'] = "Create Customers";
-			$data['main'] = 'admin_customers_create';
-			$data['tinymce'] = '';
 			$this->load->vars($data);
-			$this->load->view('dashboard');    
+			$this->load->view('admin_customers_create');    
 		} 
   	}
   
@@ -53,11 +49,9 @@ class Customers extends Controller
 		{
 			//$id = $this->uri->segment(4);
 			$data['title'] = "Edit Customer";
-			$data['main'] = 'admin_customers_edit';
 			$data['customer'] = $this->MCustomers->getCustomer($id);
-			$data['tinymce'] = '';
 			$this->load->vars($data);
-			$this->load->view('dashboard');    
+			$this->load->view('admin_customers_edit');    
 		}
   	}
   
@@ -67,7 +61,17 @@ class Customers extends Controller
 		$this->session->set_flashdata('message','Customer is now inactive');
 		redirect('admin/customers/index','refresh');
   	}
-  
+	
+	function training() 
+	{	
+		$data['title'] = "Training";
+		$this->load->vars($data);
+		$this->load->view('admin_customers_training');
+		$this->session->set_flashdata('message','Training is now completed');
+		redirect('admin/customers/index','refresh');
+	}
+	
+	
 }
 
 

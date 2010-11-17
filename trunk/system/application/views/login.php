@@ -1,4 +1,5 @@
-
+<?php $this->load->view('public_header'); ?>
+<div id="main">
 <h2>Please login to Access the Dashboard</h2>
 <?php
 if ($this->session->flashdata('error')){ 
@@ -20,6 +21,6 @@ echo "<p><label for='p'>Password</label><br/>";
 echo form_password($pdata) . "</p>";
 echo form_submit('submit','login');
 echo form_close();
-
-
 ?>
+</div>
+<?php $this->load->view('public_footer'); ?>

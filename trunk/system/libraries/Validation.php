@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
+ * @copyright	Copyright (c) 2006, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -46,12 +46,6 @@ class CI_Validation {
 	function CI_Validation()
 	{	
 		$this->CI =& get_instance();
-		
-		if (function_exists('mb_internal_encoding'))
-		{
-			mb_internal_encoding($this->CI->config->item('charset'));
-		}
-		
 		log_message('debug', "Validation Class Initialized");
 	}
 	
@@ -408,7 +402,6 @@ class CI_Validation {
 	 *
 	 * @access	public
 	 * @param	string
-	 * @param	field
 	 * @return	bool
 	 */
 	function matches($str, $field)
@@ -428,7 +421,6 @@ class CI_Validation {
 	 *
 	 * @access	public
 	 * @param	string
-	 * @param	value
 	 * @return	bool
 	 */	
 	function min_length($str, $val)
@@ -437,12 +429,7 @@ class CI_Validation {
 		{
 			return FALSE;
 		}
-
-		if (function_exists('mb_strlen'))
-		{
-			return (mb_strlen($str) < $val) ? FALSE : TRUE;		
-		}
-
+	
 		return (strlen($str) < $val) ? FALSE : TRUE;
 	}
 	
@@ -453,7 +440,6 @@ class CI_Validation {
 	 *
 	 * @access	public
 	 * @param	string
-	 * @param	value
 	 * @return	bool
 	 */	
 	function max_length($str, $val)
@@ -462,12 +448,7 @@ class CI_Validation {
 		{
 			return FALSE;
 		}
-		
-		if (function_exists('mb_strlen'))
-		{
-			return (mb_strlen($str) > $val) ? FALSE : TRUE;		
-		}
-
+	
 		return (strlen($str) > $val) ? FALSE : TRUE;
 	}
 	
@@ -478,7 +459,6 @@ class CI_Validation {
 	 *
 	 * @access	public
 	 * @param	string
-	 * @param	value
 	 * @return	bool
 	 */	
 	function exact_length($str, $val)
@@ -488,11 +468,6 @@ class CI_Validation {
 			return FALSE;
 		}
 	
-		if (function_exists('mb_strlen'))
-		{
-			return (mb_strlen($str) != $val) ? FALSE : TRUE;		
-		}
-
 		return (strlen($str) != $val) ? FALSE : TRUE;
 	}
 	
@@ -610,17 +585,17 @@ class CI_Validation {
 
 	// --------------------------------------------------------------------
 
-	/**
-	 * Is Numeric
-	 *
-	 * @access	public
-	 * @param	string
-	 * @return	bool
-	 */
-  	function is_numeric($str)
-	{
-		return ( ! is_numeric($str)) ? FALSE : TRUE;
-	} 
+    /**
+     * Is Numeric
+     *
+     * @access    public
+     * @param    string
+     * @return    bool
+     */
+    function is_numeric($str)
+    {
+        return ( ! is_numeric($str)) ? FALSE : TRUE;
+    } 
 
 	// --------------------------------------------------------------------
 	
@@ -635,45 +610,7 @@ class CI_Validation {
 	{
 		return (bool)preg_match( '/^[\-+]?[0-9]+$/', $str);
 	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Is a Natural number  (0,1,2,3, etc.)
-	 *
-	 * @access	public
-	 * @param	string
-	 * @return	bool
-	 */
-	function is_natural($str)
-	{   
-   		return (bool)preg_match( '/^[0-9]+$/', $str);
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Is a Natural number, but not a zero  (1,2,3, etc.)
-	 *
-	 * @access	public
-	 * @param	string
-	 * @return	bool
-	 */
-	function is_natural_no_zero($str)
-	{   
-		if ( ! preg_match( '/^[0-9]+$/', $str))
-		{
-			return FALSE;
-		}
 	
-		if ($str == 0)
-		{
-			return FALSE;
-		}
-
-		return TRUE;
-	}
-
 	// --------------------------------------------------------------------
 	
 	/**

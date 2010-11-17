@@ -1,3 +1,5 @@
+<?php $this->load->view('admin_header');?>
+<div id='main'>
 <h1><?php echo $title;?></h1>
 
 <?php
@@ -80,6 +82,6 @@ echo form_dropdown('class',$options) ."</p>";
 
 echo form_submit('submit','create customer');
 echo form_close();
-
-
 ?>
+</div>
+<?php $this->load->view('admin_footer');?>

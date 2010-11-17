@@ -1,3 +1,5 @@
+<?php $this->load->view('admin_header');?>
+<div id='main'>
 <h1><?php echo $title;?></h1>
 
 <?php
@@ -21,6 +23,7 @@ echo form_dropdown('status',$options, $admin['status']) ."</p>";
 echo form_hidden('id',$admin['id']);
 echo form_submit('submit','update admin');
 echo form_close();
-
-
 ?>
+
+</div>
+<?php $this->load->view('admin_footer');?>

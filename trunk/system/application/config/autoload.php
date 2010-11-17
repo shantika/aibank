@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -23,7 +23,6 @@
 | 3. Plugins
 | 4. Custom config files
 | 5. Language files
-| 6. Models
 |
 */
 
@@ -39,7 +38,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session');
+$autoload['libraries'] = array('database','session','validation');
 
 
 /*
@@ -51,7 +50,7 @@ $autoload['libraries'] = array('database', 'session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form', 'text');
+$autoload['helper'] = array('url','form','text','date');
 
 
 /*
@@ -63,7 +62,7 @@ $autoload['helper'] = array('url', 'form', 'text');
 |	$autoload['plugin'] = array('captcha', 'js_calendar');
 */
 
-$autoload['plugin'] = array();
+$autoload['plugin'] = array('captcha');
 
 
 /*
@@ -97,20 +96,18 @@ $autoload['config'] = array();
 
 $autoload['language'] = array();
 
+$autoload['model'] = array('MAdmins','MCustomers');
+
 
 /*
 | -------------------------------------------------------------------
-|  Auto-load Models
+|  Auto-load Core Libraries
 | -------------------------------------------------------------------
-| Prototype:
 |
-|	$autoload['model'] = array('model1', 'model2');
+| DEPRECATED:  Use $autoload['libraries'] above instead.
 |
 */
-
-$autoload['model'] = array('MAdmins', 'MTreeNodes', 'MCustomers');
-
+// $autoload['core'] = array();
 
 
-/* End of file autoload.php */
-/* Location: ./system/application/config/autoload.php */
+?>
