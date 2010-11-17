@@ -5,16 +5,6 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title><?php echo $title; ?></title>
 <link href="<?php echo base_url();?>includes/css/admin.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-//<![CDATA[
-base_url = '<?php echo base_url();?>';
-//]]>
-</script>
-<script type="text/javascript" src="<?php echo base_url();?>includes/js/prototype.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>includes/js/scriptaculous.js" ></script>
-<script type="text/javascript" src="<?php echo base_url();?>includes/js/customtools.js" ></script>
-
-<?php echo $tinymce;?>
 
 </head>
 <body>
