@@ -1,38 +1,47 @@
 <?php
-
-class Home extends Controller {
-  function Home(){
-    parent::Controller();
-    session_start();
-  }
-
-  function index(){	
-  	$this->load->library('encrypt');
-	if ($this->input->post('username')){
-		$u = $this->input->post('username');
-		$pw = $this->input->post('password');
-		$row = $this->MAdmins->verifyUser($u,$pw);
-		//echo $this->session->userdata('lastquery');
-		//$row =array('id' => '1', 'username' => 'tmyer');
-		//echo md5('change_this_now!');
-		if (count($row)){
-			$_SESSION['userid'] = $row['id'];
-			//$_SESSION['username'] = $row['username'];
-			redirect('admin/dashboard','refresh');
-		}else{
-			redirect('home/index','refresh');
-		}
-	}else{
-		$data['title'] = "AI Bank";
-		$this->load->vars($data);
-		$this->load->view('login');
-	}
-  }
-
-function testview(){
+    class Home extends Controller{
+        function __construct(){
+            parent::Controller();
+            session_start();
+        }
+        
+        function index(){
+            $this->load->library('encrypt');
+            $status = $this->session->userdata('status');
+            if (isset($status) && $status == 'OK'){
+                redirect('admin/dashboard','refresh');
+            }
+            if ($this->input->post('username')){
+                $u = $this->input->post('username');
+                $pw = $this->input->post('password');
+                $row = $this->MAdmins->verifyUser($u,$pw);
+                if (count($row)){
+                    $userdata = array(
+                        'status' => 'OK',
+                        'name' => $u
+                    );
+                    $this->session->set_userdata($userdata);
+                    redirect('admin/dashboard','refresh');
+                }else{
+                    redirect('home/index','refresh');
+                }
+            }else{
+                $data['title']  = 'Artificial Intelligence Bank'; 
+                $data['base']   = $this->config->item('base_url');
+                $data['css']    = $this->config->item('css');
+                $this->load->view('login', $data);
+            }
+        }
+        
+        function logout(){
+            $this->session->sess_destroy();
+            redirect('home/index','refresh');
+        }
+        
+        function testview(){
             $data['title']  = 'Artificial Intelligence Bank';
-            //$data['base']   = $this->config->item('base_url');
-            //$data['css']    = $this->config->item('css');
+            $data['base']   = $this->config->item('base_url');
+            $data['css']    = $this->config->item('css');
             $this->load->helper('form');
             $this->load->view('admin/admin_customers_create', $data);
         }
@@ -48,7 +57,7 @@ function testview(){
 
             $this->load->library('Customer'); 
             $this->load->library('TreeNode');
-            $mC = new MCustomers();
+            $mC = new MCustomer();
             $cus = $mC->getById(11);
             
             //$root = new TreeNode();
@@ -60,16 +69,8 @@ function testview(){
             var_dump($test);
         }
         
-        function testCalc(){
-            $this->load->library('Util');
-            $ave = Util::calcSplitInfo('income');
-            var_dump($ave);
-        }
-        
         function testf(){
             echo time();
         }
-    
-}//end controller class
-
+    }
 ?>
