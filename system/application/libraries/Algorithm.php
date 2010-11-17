@@ -227,6 +227,35 @@
         	return $gainRatio;
         }
         
+        public function buildTree($node,$customerArray){
+            
+            if ($this->checkOnlyClass($customerArray)){
+                $node->type = 1;
+                $node->label = 'class';
+                $node->data = $customerArray[0]->class;
+            }else{
+                $max=0;
+                $maxRatioAtt; 
+                foreach (Customer::ATTRIBUTE_ARRAY as $attribute){
+                    $ratio = $this->calcGainRatio($customerArray,$attribute);
+                    if ($max<$ratio){
+                        $max=$ratio;
+                        $maxRatioAtt = $attribute;                        
+                    }
+                }
+                $node->type = 0;
+                $node->label = $maxRatioAtt;
+                //...
+                if ($this->isContinueous($maxRatioAtt)){
+                   //...lien tuc
+                }else{
+                    //...roi rac
+                }
+            }
+            
+            
+        }
+        
         
     }
 		

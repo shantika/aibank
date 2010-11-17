@@ -126,5 +126,7 @@
             var_dump($currentNode->data);
             return $currentNode->data;
         }
+        
+        
     }
 ?>
