@@ -1,5 +1,7 @@
+<?php $this->load->view('admin_header');?>
+<div id='main'>
 <h1><?php echo $title;?></h1>
-<p><?php echo anchor("admin/customers/create", "Create new customer");?>
+<p><?php echo anchor("admin/customers/create", "Create new customer");?></p>
 <?php
 if ($this->session->flashdata('message')){
 	echo "<div class='message'>".$this->session->flashdata('message')."</div>";
@@ -29,3 +31,5 @@ if (count($customers)){
 	echo "</div>";
 }
 ?>
+</div>
+<?php $this->load->view('admin_footer');?>

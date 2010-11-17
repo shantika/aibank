@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
+ * @copyright	Copyright (c) 2006, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -267,7 +267,7 @@ class CI_Trackback {
 		}
 		@fclose($fp);
 		
-		if (stristr($this->response, '<error>0</error>') === FALSE)
+		if ( ! eregi("<error>0</error>", $this->response))
 		{
 			$message = 'An unknown error was encountered';
 			
@@ -370,7 +370,10 @@ class CI_Trackback {
 		}
 		else
 		{
-			$url = rtrim($url, '/');
+			if (ereg("/$", $url))
+			{
+				$url = substr($url, 0, -1);
+			}
 				
 			$tb_array = explode('/', $url);
 			$tb_id	= $tb_array[count($tb_array)-1];

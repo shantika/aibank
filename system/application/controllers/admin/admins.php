@@ -12,11 +12,9 @@ class Admins extends Controller {
   
   function index(){
 	$data['title'] = "Manage Users";
-	$data['main'] = 'admin_admins_home';
 	$data['admins'] = $this->MAdmins->getAllUsers();
-	$data['tinymce'] = '';
 	$this->load->vars($data);
-	$this->load->view('dashboard');  
+	$this->load->view('admin_admins_home');  
   }
   
 
@@ -29,10 +27,8 @@ class Admins extends Controller {
   		redirect('admin/admins/index','refresh');
   	}else{
 		$data['title'] = "Create User";
-		$data['main'] = 'admin_admins_create';
-		$data['tinymce'] = '';
 		$this->load->vars($data);
-		$this->load->view('dashboard');    
+		$this->load->view('admin_admins_create');    
 	} 
   }
   
@@ -45,11 +41,9 @@ class Admins extends Controller {
   	}else{
 		//$id = $this->uri->segment(4);
 		$data['title'] = "Edit User";
-		$data['main'] = 'admin_admins_edit';
 		$data['admin'] = $this->MAdmins->getUser($id);
-		$data['tinymce'] = '';
 		$this->load->vars($data);
-		$this->load->view('dashboard');    
+		$this->load->view('admin_admins_edit');    
 	}
   }
   
