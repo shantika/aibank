@@ -12,6 +12,7 @@
         public $id, $parent_id, $type, $label, $data, $level, $children;
         public $leaf_n, $leaf_e;    // for coverage, only has value if $type = 1,
                                     // i.e the current node is ah leaf
+        //public $moc;
         
         function TreeNode(){
             $this->id = 0;
@@ -21,7 +22,7 @@
             $this->children = array();
             $this->leaf_n = 0;
             $this->leaf_e = 0;
-            $this->level = 0;            
+            $this->level = 0;           
         }
         
         /**

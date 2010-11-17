@@ -67,6 +67,20 @@ function testview(){
             var_dump($ave);
         }
         
+        function testBuildTree(){
+            $this->load->library('Algorithm');
+            $this->load->library('Customer'); 
+            $this->load->library('TreeNode');
+            $mC = new MCustomers();
+            $cusArr = $mC->getAll();
+            //var_dump($cusArr);
+            $root = TreeNode::getTreeNodeById(62);
+            echo "0";
+            //var_dump($root);
+            $algo = new Algorithm();
+            $algo->buildTree($root,$cusArr); 
+        }
+        
         function testf(){
             echo time();
         }

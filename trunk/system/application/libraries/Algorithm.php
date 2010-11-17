@@ -29,8 +29,13 @@
             $currentClass=-1;
             foreach ($arrayCustomer as $customer){
                 if (strcasecmp($currentClass,$customer->class)!=0){
-                   if ($currentClass==-1) $currentClass==$customer->class;
-                   else return false; 
+                   if ($currentClass==-1){ 
+                        $currentClass=$customer->class;
+                        echo($currentClass);
+                   } else {
+                       echo($currentClass);
+                       return false;
+                   } 
                 }
             }
             return true;
@@ -227,30 +232,117 @@
         	return $gainRatio;
         }
         
-        public function buildTree($node,$customerArray){
+        
+        public function gainRatioM($customerArray,$att,$moc){
+            $info = $this->calcInfo($customerArray);
+            $aboveMoc = array();
+            $lowerMoc = array(); 
+            foreach ($customerArray as $eachCus){
+                $eachCusArr = $eachCus->toArray();
+                if($eachCusArr[$maxRatioAtt] > $node->moc){                        
+                    array_push($aboveMoc, $eachCus);
+                }else{
+                    array_push($lowerMoc, $eachCus);
+                }                            
+            }
             
+            $pAbove =  sizeof($aboveMoc)/sizeof($customerArray);
+            $pLower =  sizeof($lowerMoc)/sizeof($customerArray);  
+            $infoX = ((sizeof($aboveMoc)/sizeof($customerArray))*$this->calcInfo($aboveMoc))+((sizeof($lowerMoc)/sizeof($customerArray))*$this->calcInfo($lowerMoc));
+            $gainX = $info - $infoX;
+            $slipInfoX = (-$pAbove)*(log($pAbove)/log(2))-($pLower)*(log($pLower)/log(2));
+            $gainRatio = $gainX/$slipInfoX;
+            return $gainRatio;            
+        }
+        public $i=0;
+        public function buildTree($node,$customerArray){
+            $this->i++;
             if ($this->checkOnlyClass($customerArray)){
                 $node->type = 1;
                 $node->label = 'class';
                 $node->data = $customerArray[0]->class;
+                //$node->save();                          
+                echo "saved_leaf".$this->i;
+                return;
             }else{
+                //$node->save;
+                echo "saved_normal".$this->i;
+                
                 $max=0;
-                $maxRatioAtt; 
-                foreach (Customer::ATTRIBUTE_ARRAY as $attribute){
+                $maxRatioAtt;
+                $forSearch = new Customer(); 
+                foreach ($forSearch->attribute_array as $attribute){
                     $ratio = $this->calcGainRatio($customerArray,$attribute);
                     if ($max<$ratio){
                         $max=$ratio;
                         $maxRatioAtt = $attribute;                        
                     }
                 }
-                $node->type = 0;
-                $node->label = $maxRatioAtt;
-                //...
+                
+                $node->type = 0;                
+                
+                $newNode = new TreeNode();
+                $newNode->parent_id = $node->id;
+                $newNode->type = 0; 
+                $newNode->label = $maxRatioAtt;               
+                
                 if ($this->isContinueous($maxRatioAtt)){
-                   //...lien tuc
+                   $tmpMCus = new MCustomers();
+                    $valAttr = $tmpMCus->getDistinctValAttr($maxRatioAtt);
+                    $total = count($valAttr);
+                    for ($i = 0 ; $i < $total-1; $i++){
+                        for($j = i+1; $j<$total; $j++){
+                            if ($valAttr[$i]>$valAttr[$j]){
+                                $temp = $valAttr[$i];
+                                $valAttr[$i] = $valAttr[$j];
+                                $valAttr[$j] = $temp;
+                            }    
+                        }
+                    }
+                    $maxAtt = 0;
+                    $maxTemp = 0;
+                    for ($i = 0; $i<$total-1; $i++){
+                        $temp = (float)($valAttr[$i]+$valAttr[$i+1])/2;
+                        if ($maxAtt<$this->gainRatioM($customerArray, $maxRatioAtt, $temp)){
+                            $maxAtt = $this->gainRatioM($customerArray, $maxRatioAtt, $temp); 
+                            $maxTemp = $temp;                           
+                        }
+                    }
+                    $moc = $maxTemp;
+                    $aboveMoc = array();
+                    $lowerMoc = array(); 
+                    foreach ($customerArray as $eachCus){
+                        $eachCusArr = $eachCus->toArray();
+                        if($eachCusArr[$maxRatioAtt] > $moc){                        
+                            array_push($aboveMoc, $eachCus);
+                        }else{
+                            array_push($lowerMoc, $eachCus);
+                        }                            
+                    }
+                    
+                    $newNode->data = ">".$moc;                    
+                    $this->buildTree($newNode,$aboveMoc);
+                    $newNode->data = "<".$moc;
+                    $this->buildTree($newNode,$lowerMoc);
+                    
                 }else{
-                    //...roi rac
+                    $tmpMCus = new MCustomers();
+                    $valAttr = $tmpMCus->getDistinctValAttr($maxRatioAtt);
+                    $total = count($valAttr);
+                    for ($i = 0 ; $i < $total; $i++){
+                        $tmp = array();
+                        foreach ($customerArray as $eachCus){
+                            $eachCusArr = $eachCus->toArray();
+                            if($eachCusArr[$maxRatioAtt] == $valAttr[$i]){                        
+                                array_push($tmp, $eachCus);
+                            }                            
+                        }
+                        $newNode->data = $i;
+                        $this->buildTree($newNode,$tmp);
+                    }
+                           
                 }
+                
             }
             
             
