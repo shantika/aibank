@@ -96,7 +96,7 @@ $autoload['config'] = array();
 
 $autoload['language'] = array();
 
-$autoload['model'] = array('MAdmins','MCustomers');
+$autoload['model'] = array('MAdmins','MCustomers', 'MTreeNodes');
 
 
 /*
