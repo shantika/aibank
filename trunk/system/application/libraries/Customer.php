@@ -100,7 +100,28 @@ class Customer{
                 'status' => $this->status      
         );
         return $cusAtts;            
-    }   
+    }
+    
+    const ATTRIBUTE_ARRAY = array(
+                'dob_year',
+                'job_position',
+                'housing_status',
+                'resident',
+                'vehicle',
+                'credit_quality',
+                'education_level',
+                'work_ex',     
+                'insurance',    
+                'is_marriage',   
+                'dependants',   
+                'money_owned',   
+                'income',    
+                'familiar_income',   
+                'outcome',    
+                'class',   
+                'since',   
+                'status'  
+                );   
     
 }
 ?>
