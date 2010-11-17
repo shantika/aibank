@@ -1,6 +1,25 @@
 <?php
 //Class Customer by Hacon
 class Customer{
+    
+       public $attribute_array = array(
+                'dob_year',
+                'job_position',
+                'housing_status',
+                'resident',
+                'vehicle',
+                'credit_quality',
+                'education_level',
+                'work_ex',     
+                'insurance',    
+                'is_marriage',   
+                'dependants',   
+                'money_owned',   
+                'income',    
+                'familiar_income',   
+                'outcome',     
+                ); 
+                
     public $id;
     public $name;
     public $dobYear;
@@ -102,26 +121,7 @@ class Customer{
         return $cusAtts;            
     }
     
-    const ATTRIBUTE_ARRAY = array(
-                'dob_year',
-                'job_position',
-                'housing_status',
-                'resident',
-                'vehicle',
-                'credit_quality',
-                'education_level',
-                'work_ex',     
-                'insurance',    
-                'is_marriage',   
-                'dependants',   
-                'money_owned',   
-                'income',    
-                'familiar_income',   
-                'outcome',    
-                'class',   
-                'since',   
-                'status'  
-                );   
+   
     
 }
 ?>

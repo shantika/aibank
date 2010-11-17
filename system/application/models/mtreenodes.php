@@ -42,16 +42,20 @@
          */
         
         public function addNewNode($treeNode){
-            $this->db->set('parent_id', $treeNode->parent_id);
+            //$this->db->set('parent_id', $treeNode->parent_id);
             $this->db->set('type', $treeNode->type);
             $this->db->set('label', $treeNode->label);
             $this->db->set('data', $treeNode->data);
             $this->db->set('leaf_n', $treeNode->leaf_n);
             $this->db->set('leaf_e', $treeNode->leaf_e);
-            if ($this->db->insert('treenodes')){
-                return $this->db->insert_id();   
-            }else{
-                return -1;
+            if ($this->getNodeById($treeNode->parent_id)==null){                                
+                if ($this->db->insert('treenodes')){
+                    return $this->db->insert_id();   
+                }else{
+                    return -1;
+                }
+            }else{                
+   
             }
         }
         
@@ -80,6 +84,7 @@
         public function getCustomerClass($root, $customer){
             $this->load->library('Customer');
             $this->load->library('TreeNode');
+            $this->load->library('Util');
             var_dump($customer);
             $attributeArray = $customer->toArray();
             $currentNode=$root;
@@ -87,7 +92,8 @@
                 $currentNode->findChild();                 
                 $currentChildren = $currentNode->children; 
                 if (sizeof($currentChildren)>0){
-                    $data = $attributeArray[$currentChildren[0]->label];
+                    $currentAtt = $currentChildren[0]->label;
+                    $data = $attributeArray[$currentAtt];
                     $found=0;
                     foreach ($currentChildren as $children){
                         //var_dump($children);
@@ -100,17 +106,37 @@
                             }
                             return $children->data;
                         }
-                        if (strcasecmp($children->data,$data)==0){
-                            $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
-                            var_dump("__trace1:".$children->id."_");
-                            $found=1;
-                            break;
-                        }
-                        if ($children->data==$data){
-                            $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
-                            var_dump("__trace2:".$children->id."_"); 
-                            $found=1;
-                            break;
+                        //xu ly voi lien tuc:
+                        if (Util::isContinueous($currentAtt)){
+                            $moc = substr($children->data,1);
+                            $navi = substr($children->data,0,1);
+                            if (($data>$moc)&&(strcasecmp($navi,">")==0)){
+                                $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                                var_dump("__trace1:".$children->id."_");
+                                $found=1;
+                                break;    
+                            }
+                            if (($data<$moc)&&(strcasecmp($navi,"<")==0)){
+                                $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                                var_dump("__trace1:".$children->id."_");
+                                $found=1;
+                                break;    
+                            }
+                        
+                        //xy ly voi roi rac    
+                        }else{
+                            if (strcasecmp($children->data,$data)==0){
+                                $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                                var_dump("__trace1:".$children->id."_");
+                                $found=1;
+                                break;
+                            }
+                            if ($children->data==$data){
+                                $currentNode=$children;//TreeNode::getTreeNodeById($children->id);
+                                var_dump("__trace2:".$children->id."_"); 
+                                $found=1;
+                                break;
+                            }
                         }                     
                     }
                     if ($found==0){
