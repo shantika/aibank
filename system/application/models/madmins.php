@@ -79,7 +79,7 @@ class MAdmins extends Model{
 	 $this->db->update('users', $data);
 	
 	}
-	
+	/*
 	
 	//check validity of email addie!
 	function check_valid_email($email){
@@ -100,7 +100,7 @@ class MAdmins extends Model{
 			return 'nopassword';
 		}
 	}	
-	
+	*/
 }
 
 
